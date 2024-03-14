@@ -1,0 +1,58 @@
+* {
+  font-family: "IRANSans" !important;
+  scroll-behavior: smooth;
+}
+
+:root {
+  --hover-color: 1;
+}
+
+.notistack-SnackbarContainer.z-alert {
+  z-index: 110000;
+}
+
+.ck-editor__editable {
+  min-height: 400px;
+}
+
+.stimulsoft-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100000;
+  overflow-y: auto;
+  height: 100vh;
+  background-color: white;
+}
+
+/* animations */
+@keyframes pulse-many {
+  from {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.pulse-many-animation {
+  animation-name: pulse-many;
+  animation-duration: 1.5s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+/* others */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  /* display: none; <- Crashes Chrome on hover */
+  -webkit-appearance: none;
+  margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+input[type="number"] {
+  -moz-appearance: textfield; /* Firefox */
+}
