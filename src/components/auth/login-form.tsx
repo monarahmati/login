@@ -7,7 +7,16 @@ import { loginConfig } from "../../config/features/auth/auth-config";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-import { Button, Checkbox, FormControlLabel, FormGroup, IconButton, InputAdornment, Typography } from "@mui/material";
+import {
+  Button,
+  Checkbox,
+  FormControlLabel,
+  FormGroup,
+  IconButton,
+  InputAdornment,
+  Typography,
+} from "@mui/material";
+import FixedModal from "components/ui/modal/fixed-modal";
 import LoadingButton from "@mui/lab/LoadingButton";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
@@ -16,29 +25,22 @@ import { AuthApi } from "api/auth/auth-api";
 import userStore from "hooks/store/user-store";
 import { useNavigate } from "react-router-dom";
 
-
-
-
 const LoginForm = () => {
-
-
-
   //PASSWORD_STATE
   const [showPasword, setShowPassword] = useState(false);
   //SUBMIT_STATE
   const [rememberMe, setRememberMe] = useState(true);
   //USE_STORE
-  const chnageUserData = userStore((state) => state.chnageUserData )
+  const chnageUserData = userStore((state) => state.chnageUserData);
   //USE_NAVIGATE
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   // forget password modal
-  const [isOpenForgetPasswordModal, setIsOpenForgetPasswordModal] = useState(false);
+  const [isOpenForgetPasswordModal, setIsOpenForgetPasswordModal] =
+    useState(false);
 
-
-
-  const loginMutation = useMutation( AuthApi.login , {
+  const loginMutation = useMutation(AuthApi.login, {
     onSuccess: (data) => {
-      if( data.data){
+      if (data.data) {
         chnageUserData({
           id: data.data.id,
           firstName: data.data.firstName,
@@ -51,19 +53,14 @@ const LoginForm = () => {
         if (rememberMe) {
           localStorage.setItem("token-auth", data.data.token);
         }
-        navigate("/welcome")
+        navigate("/welcome");
       } else {
         const message = "نام کاربری یا رمز ورود اشتباه است";
         setError(loginConfig.username, { message });
         setError(loginConfig.password, { message });
-
       }
-    }
-  } )
-
-
-
-
+    },
+  });
 
   //TOGGLE_SEE_PASSWORD
   const toggleSeePassword = () => {
@@ -76,7 +73,6 @@ const LoginForm = () => {
     [loginConfig.password]: yup.string().required().min(6),
   });
 
-
   //USE_REACTE_HOOK_FORM
   const {
     register,
@@ -85,10 +81,10 @@ const LoginForm = () => {
     handleSubmit,
   } = useForm({ resolver: yupResolver(loginFormSchema) });
 
-  //HANDLEsubmit 
-  const onSubmitHandler = ( values : any ) => {
-    loginMutation.mutate(values)
-  }
+  //HANDLEsubmit
+  const onSubmitHandler = (values: any) => {
+    loginMutation.mutate(values);
+  };
 
   return (
     <>
@@ -147,9 +143,11 @@ const LoginForm = () => {
                   endAdornment: (
                     <InputAdornment position="end">
                       <IconButton onClick={toggleSeePassword}>
-                        {
-                            showPasword ? ( <RemoveRedEyeIcon/> ) : (<VisibilityOffIcon/> )
-                        }
+                        {showPasword ? (
+                          <RemoveRedEyeIcon />
+                        ) : (
+                          <VisibilityOffIcon />
+                        )}
                       </IconButton>
                     </InputAdornment>
                   ),
@@ -159,26 +157,25 @@ const LoginForm = () => {
 
               <FormGroup>
                 <FormControlLabel
-                    control={
-                      <Checkbox
-                       checked={rememberMe}
-                       onChange={ () => setRememberMe((state) => !state )}
-                      />
-                    }
-                    label = {
-                      <Typography variant="body2"> مرا به خاطر بسپار </Typography>
-                    }
+                  control={
+                    <Checkbox
+                      checked={rememberMe}
+                      onChange={() => setRememberMe((state) => !state)}
+                    />
+                  }
+                  label={
+                    <Typography variant="body2"> مرا به خاطر بسپار </Typography>
+                  }
                 />
               </FormGroup>
             </Stack>
 
-            
             <Stack spacing={1}>
               <LoadingButton
                 variant="contained"
                 size="large"
                 type="submit"
-                loading={loginMutation.isLoading}  //Need to 
+                loading={loginMutation.isLoading} //Need to
                 fullWidth
               >
                 ورود
@@ -214,8 +211,13 @@ const LoginForm = () => {
               </Box>
             </Stack>
 
-            //FixedModal...
-
+            <FixedModal
+              open={isOpenForgetPasswordModal}
+              handleClose={() => setIsOpenForgetPasswordModal(false)}
+              title="فراموشی رمز ورود"
+            >
+              //FixedModal...
+            </FixedModal>
           </Stack>
         </Box>
       </Box>
