@@ -1,4 +1,4 @@
-import { Backdrop, Box, CircularProgress } from "@mui/material";
+import { Backdrop, Box, Button, CircularProgress } from "@mui/material";
 import { createPortal } from "react-dom"; // Need to
 
 interface WindowLoadingProps {
@@ -36,7 +36,7 @@ const windowLoading = (props: WindowLoadingProps) => {
           </Button>
         </Box>
       )}
-    </Backdrop>
+    </Backdrop>,
     document.body
   );
 };

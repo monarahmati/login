@@ -5,7 +5,6 @@ export const reactQueryClient = new QueryClient({
     queries: {
       refetchOnWindowFocus: false,
       staleTime: 0,
-      cacheTime: 0,
     },
   },
 });

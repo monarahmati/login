@@ -14,12 +14,11 @@ import { useMutation } from "@tanstack/react-query";
 import { AuthApi } from "api/auth/auth-api";
 import userStore from "hooks/store/user-store";
 import { useNavigate } from "react-router-dom";
-import { stat } from "fs";
 
 
 
 
-const loginForm = () => {
+const LoginForm = () => {
 
 
 
@@ -170,7 +169,7 @@ const loginForm = () => {
               </FormGroup>
             </Stack>
 
-            
+
           </Stack>
         </Box>
       </Box>
@@ -178,4 +177,4 @@ const loginForm = () => {
   );
 };
 
-export default loginForm;
+export default LoginForm;

@@ -6,7 +6,7 @@ import LoginForm from "../../components/auth/login-form";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-const loginPage = () => {
+const LoginPage = () => {
 
   const navigate = useNavigate();
 
@@ -38,4 +38,4 @@ const loginPage = () => {
   );
 };
 
-export default loginPage;
+export default LoginPage;

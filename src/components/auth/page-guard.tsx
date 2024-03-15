@@ -12,7 +12,7 @@ interface PageGuardProps {
   permission?: string;
 }
 
-const pageGuard = (props: PageGuardProps) => {
+const PageGuard = (props: PageGuardProps) => {
   const { render, permission } = props;
   //get-userStore
   const userState = userStore();
@@ -81,4 +81,4 @@ const pageGuard = (props: PageGuardProps) => {
   return <>{render}</>;
 };
 
-export default pageGuard;
+export default PageGuard;

@@ -2,10 +2,10 @@ import LoginPage from "pages/auth/login-page";
 import PageGuard from "components/auth/page-guard";
 import WellcomePage from "pages/wellcome-page";
 import { createBrowserRouter } from "react-router-dom";
-import { SidenavShape } from "types/layout-type";
-import { sidenavsLayout } from "config/features/layout-config";
 
-let routerItems = [
+
+
+const routerItems = [
   {
     path: "/",
     element: <LoginPage />,
@@ -14,31 +14,31 @@ let routerItems = [
     path: "/wellcome",
     element: <PageGuard render={<WellcomePage />} />,
   },
+
 ];
 
-const getPages = (items: SidenavShape[]) => {
-  let renderedPages: any[] = [];
-  items.forEach((item) => {
-    if (!Array.isArray(item.items)) {
-      renderedPages.push({
-        path: item.path || "/",
-        element: item.element ? (
-          <PageGuard render={<item.element />} permission={item.licenseName} />
-        ) : (
-          <WellcomePage />
-        ),
-      });
-    } else {
-      renderedPages = [...renderedPages, ...getPages(item.items)];
-    }
-  });
 
-  return renderedPages;
-};
+// const extractRoutes = (items: SidenavShape[]) => {
+//   let routes: any[] = [];
+//   items.forEach((item) => {
+//     if (!Array.isArray(item.items)) {
+//       routes.push({
+//         path: item.path || "/",
+//         element: item.element ? (
+//           <PageGuard render={<item.element />} permission={item.licenseName} />
+//         ) : (
+//           <WellcomePage />
+//         ),
+//       });
+//     } else {
+//       routes = [...routes, ...extractRoutes(item.items)];
+//     }
+//   });
 
-const router = createBrowserRouter([
-  ...routerItems,
-  ...getPages(sidenavsLayout),
-]);
+//   return routes;
+// };
+
+
+const router = createBrowserRouter([...routerItems]);
 
 export default router;
