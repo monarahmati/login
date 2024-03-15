@@ -12,6 +12,8 @@ import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { useMutation } from "@tanstack/react-query";
 import { AuthApi } from "api/auth/auth-api";
+import userStore from "hooks/store/user-store";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -24,9 +26,39 @@ const loginForm = () => {
   const [showPasword, setShowPassword] = useState(false);
   //SUBMIT_STATE
   const [rememberMe, setRememberMe] = useState(true);
+  //USE_STORE
+  const chnageUserData = userStore((state) => state.chnageUserData )
+  //USE_NAVIGATE
+  const navigate = useNavigate()
 
 
-  const loginMutation = useMutation( AuthApi ,  )
+
+  const loginMutation = useMutation( AuthApi.login , {
+    onSuccess: (data) => {
+      if( data.data){
+        chnageUserData({
+          id: data.data.id,
+          firstName: data.data.firstName,
+          userName: data.data.userName,
+          lastName: data.data.lastName,
+          bio: data.data.bio,
+          permissions: data.data.lisence,
+          nowDate: data.data.dateNow,
+        });
+        if (rememberMe) {
+          localStorage.setItem("token-auth", data.data.token);
+        }
+        navigate("/welcome")
+      } else {
+        const messageErrorUsername = "نام کاربری اشتباه استد";
+        const messageErrorPassword = "رمز عبور اشتباه است ";
+        setError(loginConfig.username , {messageErrorUsername} );
+        setError(loginConfig.password , {messageErrorPassword} );
+
+      }
+    },
+    onError: () => {},
+  } )
 
 
 
@@ -46,6 +78,7 @@ const loginForm = () => {
   const {
     register,
     formState: { errors },
+    setError,
   } = useForm({ resolver: yupResolver(loginFormSchema) });
 
   return (

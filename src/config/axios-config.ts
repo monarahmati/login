@@ -5,7 +5,7 @@ import { enqueueSnackbar } from "notistack";
 //get token
 const token = localStorage.getItem("token-auth");
 
-export const clientAxios = axios.create({
+const clientAxios = axios.create({
   baseURL: globalConfig.BASE_API_URL,
   headers: {
     Authorization: "Bearer" + token,
@@ -37,5 +37,10 @@ clientAxios.interceptors.response.use(
         variant: "error",
       });
     }
+
+    return Promise.reject(error)
   }
 );
+
+
+export default clientAxios;
