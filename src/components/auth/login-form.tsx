@@ -7,13 +7,14 @@ import { loginConfig } from "../../config/features/auth/auth-config";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-import { Checkbox, FormControlLabel, FormGroup, IconButton, InputAdornment } from "@mui/material";
+import { Checkbox, FormControlLabel, FormGroup, IconButton, InputAdornment, Typography } from "@mui/material";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { useMutation } from "@tanstack/react-query";
 import { AuthApi } from "api/auth/auth-api";
 import userStore from "hooks/store/user-store";
 import { useNavigate } from "react-router-dom";
+import { stat } from "fs";
 
 
 
@@ -50,15 +51,15 @@ const loginForm = () => {
         }
         navigate("/welcome")
       } else {
-        const messageErrorUsername = "نام کاربری اشتباه استد";
-        const messageErrorPassword = "رمز عبور اشتباه است ";
-        setError(loginConfig.username , {messageErrorUsername} );
-        setError(loginConfig.password , {messageErrorPassword} );
+        const message = "نام کاربری یا رمز ورود اشتباه است";
+        setError(loginConfig.username, { message });
+        setError(loginConfig.password, { message });
 
       }
-    },
-    onError: () => {},
+    }
   } )
+
+
 
 
 
@@ -79,12 +80,19 @@ const loginForm = () => {
     register,
     formState: { errors },
     setError,
+    handleSubmit,
   } = useForm({ resolver: yupResolver(loginFormSchema) });
+
+  //HANDLEsubmit 
+  const onSubmitHandler = ( values : any ) => {
+    loginMutation.mutate(values)
+  }
 
   return (
     <>
       <Box
         component="form"
+        onSubmit={handleSubmit(onSubmitHandler)}
         paddingLeft={5}
         paddingRight={5}
         textAlign="center"
@@ -152,11 +160,17 @@ const loginForm = () => {
                     control={
                       <Checkbox
                        checked={rememberMe}
+                       onChange={ () => setRememberMe((state) => !state )}
                       />
+                    }
+                    label = {
+                      <Typography variant="body2"> مرا به خاطر بسپار </Typography>
                     }
                 />
               </FormGroup>
             </Stack>
+
+            
           </Stack>
         </Box>
       </Box>

@@ -1,5 +1,5 @@
 import LoginPage from "pages/auth/login-page";
-import PageGuard from "components/auth/page-guard.";
+import PageGuard from "components/auth/page-guard";
 import WellcomePage from "pages/wellcome-page";
 import { createBrowserRouter } from "react-router-dom";
 import { SidenavShape } from "types/layout-type";
@@ -10,10 +10,10 @@ let routerItems = [
     path: "/",
     element: <LoginPage />,
   },
-//   {
-//     path: "/wellcome",
-//     element: <PageGuard render={<WellcomePage />} />,
-//   },
+  {
+    path: "/wellcome",
+    element: <PageGuard render={<WellcomePage />} />,
+  },
 ];
 
 const getPages = (items: SidenavShape[]) => {
