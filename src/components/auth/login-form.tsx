@@ -7,9 +7,11 @@ import { loginConfig } from "../../config/features/auth/auth-config";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-import { IconButton, InputAdornment } from "@mui/material";
+import { Checkbox, FormControlLabel, FormGroup, IconButton, InputAdornment } from "@mui/material";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import { useMutation } from "@tanstack/react-query";
+import { AuthApi } from "api/auth/auth-api";
 
 
 
@@ -20,6 +22,13 @@ const loginForm = () => {
 
   //PASSWORD_STATE
   const [showPasword, setShowPassword] = useState(false);
+  //SUBMIT_STATE
+  const [rememberMe, setRememberMe] = useState(true);
+
+
+  const loginMutation = useMutation( AuthApi ,  )
+
+
 
   //TOGGLE_SEE_PASSWORD
   const toggleSeePassword = () => {
@@ -32,6 +41,8 @@ const loginForm = () => {
     [loginConfig.password]: yup.string().required().min(6),
   });
 
+
+  //USE_REACTE_HOOK_FORM
   const {
     register,
     formState: { errors },
@@ -102,6 +113,16 @@ const loginForm = () => {
                 }}
                 autoComplete="off"
               />
+
+              <FormGroup>
+                <FormControlLabel
+                    control={
+                      <Checkbox
+                       checked={rememberMe}
+                      />
+                    }
+                />
+              </FormGroup>
             </Stack>
           </Stack>
         </Box>
