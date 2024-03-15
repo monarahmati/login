@@ -7,7 +7,8 @@ import { loginConfig } from "../../config/features/auth/auth-config";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-import { Checkbox, FormControlLabel, FormGroup, IconButton, InputAdornment, Typography } from "@mui/material";
+import { Button, Checkbox, FormControlLabel, FormGroup, IconButton, InputAdornment, Typography } from "@mui/material";
+import LoadingButton from "@mui/lab/LoadingButton";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { useMutation } from "@tanstack/react-query";
@@ -30,6 +31,8 @@ const LoginForm = () => {
   const chnageUserData = userStore((state) => state.chnageUserData )
   //USE_NAVIGATE
   const navigate = useNavigate()
+  // forget password modal
+  const [isOpenForgetPasswordModal, setIsOpenForgetPasswordModal] = useState(false);
 
 
 
@@ -169,6 +172,49 @@ const LoginForm = () => {
               </FormGroup>
             </Stack>
 
+            
+            <Stack spacing={1}>
+              <LoadingButton
+                variant="contained"
+                size="large"
+                type="submit"
+                loading={loginMutation.isLoading}  //Need to 
+                fullWidth
+              >
+                ورود
+              </LoadingButton>
+
+              <Box>
+                <Button
+                  variant="text"
+                  sx={{ color: "grey.700", fontSize: 12 }}
+                  size="small"
+                  onClick={() => setIsOpenForgetPasswordModal(true)}
+                >
+                  فراموشی رمز ورود
+                </Button>
+              </Box>
+              <Box sx={{ mt: "80px !important" }}>
+                <Typography
+                  variant="caption"
+                  fontWeight="bold"
+                  color="grey.600"
+                >
+                  کلیه حقوق مادی و معنوی این سامانه برای سازمان فن آوری اطلاعات
+                  و ارتباطات{" "}
+                  <Typography
+                    variant="caption"
+                    fontWeight="bold"
+                    color="grey.800"
+                  >
+                    شهرداری اهواز
+                  </Typography>{" "}
+                  محفوظ میباشد
+                </Typography>
+              </Box>
+            </Stack>
+
+            //FixedModal...
 
           </Stack>
         </Box>

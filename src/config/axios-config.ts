@@ -28,7 +28,7 @@ clientAxios.interceptors.response.use(
   },
 
   (error: any) => {
-    // const statusCode = error?.response?.status;
+    // const statusCode = error?.response?.status; //Need to
     const errorMessage = error?.response?.message?.[0];
     const isSuccess = error?.response?.isSuccess;
 

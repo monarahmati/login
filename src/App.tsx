@@ -7,7 +7,7 @@ import { RouterProvider, } from "react-router-dom";
 import { createTheme } from "@mui/material/styles";
 import { QueryClientProvider } from "@tanstack/react-query";
 
-import "config/yup-config.ts";
+// import "config/yup-config.ts";
 import "assets/styles/font.css";
 import "assets/styles/global.css";
 import "react-medium-image-zoom/dist/styles.css";
